@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:expense_tracker/data/data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -223,7 +224,7 @@ class MainScreen extends StatelessWidget {
             const SizedBox(height: 20),
             Expanded(
               child: ListView.builder(
-                  itemCount: 3,
+                  itemCount: transactionData.length,
                   itemBuilder: (context, int i) {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 16),
@@ -239,16 +240,22 @@ class MainScreen extends StatelessWidget {
                             children: [
                               Row(
                                 children: [
-                                  Container(
-                                    width: 50,
-                                    height: 50,
-                                    decoration: const BoxDecoration(
-                                        color: Colors.yellow,
-                                        shape: BoxShape.circle),
+                                  Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Container(
+                                        width: 50,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                            color: transactionData[i]["color"],
+                                            shape: BoxShape.circle),
+                                      ),
+                                      transactionData[i]["icon"],
+                                    ],
                                   ),
                                   const SizedBox(width: 12),
                                   Text(
-                                    "Food",
+                                    transactionData[i]["name"],
                                     style: TextStyle(
                                       color: Theme.of(context)
                                           .colorScheme
@@ -260,9 +267,10 @@ class MainScreen extends StatelessWidget {
                                 ],
                               ),
                               Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                    "-\$45.00",
+                                    transactionData[i]["totalAmount"],
                                     style: TextStyle(
                                       color: Theme.of(context)
                                           .colorScheme
@@ -272,7 +280,7 @@ class MainScreen extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    "Today",
+                                    transactionData[i]["date"],
                                     style: TextStyle(
                                       color:
                                           Theme.of(context).colorScheme.outline,
